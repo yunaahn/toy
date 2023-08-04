@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pepe.demo.dao.BusDao">
+ <insert id="insertBus" parameterType="busDto">
+    insert into tbl_bus (
+        idx
+        ,BusNo
+        ,SeatsTotal
+        ,Departure
+        ,Arrival
+        ,BusDate
+    )
+    values (
+        idx_bus.NEXTVAL
+        ,#{BusNo}
+        ,#{SeatsTotal}
+        ,#{Departure}
+        ,#{Arrival}
+        ,#{BusDate})
+  </insert>
+  <select id="getBusList" resultType="busDto">
+  
+    select 
+         BusNo
+        ,Departure
+        ,Arrival
+        ,BusDate
+        ,Booked
+        ,Remaining
+    FROM tbl_bus 
+</select>
+
+<select id="getBusListByDate" resultType="busDto">
+  
+    select 
+         BusNo
+        ,Departure
+        ,Arrival
+        ,BusDate
+        ,Booked
+        ,Remaining
+        ,idx
+    FROM tbl_bus 
+    where BusDate = #{selectedDate}
+        
+</select>
+
+
+</mapper>

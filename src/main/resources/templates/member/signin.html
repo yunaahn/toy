@@ -1,0 +1,108 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns="http://www.thymeleaf.org" >
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="Responsive Admin &amp; Dashboard Template based on Bootstrap 5">
+	<meta name="author" content="AdminKit">
+	<meta name="keywords" content="adminkit, bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
+
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link rel="shortcut icon" href="img/icons/icon-48x48.png" />
+
+	<link rel="canonical" href="https://demo-basic.adminkit.io/pages-sign-in.html" />
+
+	<title>Sign In | AdminKit Demo</title>
+
+	<link href="/css/app.css" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+	<main class="d-flex w-100">
+		<div class="container d-flex flex-column">
+			<div class="row vh-100">
+				<div class="col-sm-10 col-md-8 col-lg-6 mx-auto d-table h-100">
+					<div class="d-table-cell align-middle">
+
+						<div class="text-center mt-4">
+							
+							<p class="lead">
+								로그인
+							</p>
+						</div>
+						<form  th:object="${memberDto}" method="post">
+						<div class="card">
+							<div class="card-body">
+								<div class="m-sm-4">
+									<form action="/member/signin" method="post">
+										<div class="mb-3">
+											<label class="form-label">아이디</label>
+											<input class="form-control form-control-lg" type="text" name="Id" placeholder="Enter your Id" th:value="${memberDto?.Id}" />
+										</div>
+										
+											<label class="form-label">비밀번호</label>
+											<input class="form-control form-control-lg" type="password" name="Password" placeholder="Enter password" th:value="${memberDto?.Password}" />
+										</div>
+										<div class="text-center mt-3">
+											<a href="/member/signup" class="btn btn-lg btn-primary">회원가입</a>
+											<button type="submit" class="btn btn-lg btn-primary">로그인</button> 
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+					</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+
+	<script src="/js/app.js"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+  // 폼 제출 이벤트 처리
+  $('form').submit(function(event) {
+    event.preventDefault(); // 기본 제출 동작 방지
+    
+    // 입력된 데이터 가져오기
+    var id = $('input[name="Id"]').val();
+    var password = $('input[name="Password"]').val();
+    
+    // 데이터 객체 생성
+    var data = {
+      id: id,
+      password: password
+    };
+    
+    // Ajax 요청 생성
+    $.ajax({
+      url: "/member/signin",
+      type: "POST",
+      data: JSON.stringify(data),
+      contentType: "application/json",
+      success: function(response) {
+        // 요청이 성공한 경우 처리할 동작
+        console.log("Success:", response);
+        // 리다이렉트 등 추가 동작 수행 가능
+		alert("로그인 되었습니다");
+        window.location.href = "/main/list";
+      },
+      error: function(xhr, status, error) {
+        // 요청이 실패한 경우 처리할 동작
+		alert("로그인에 실패했습니다");
+        console.log("Error:", error);
+      }
+    });
+  });
+});
+</script>
+
+</body>
+
+</html>

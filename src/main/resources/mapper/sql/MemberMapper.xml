@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pepe.demo.dao.MemberDao">
+ <insert id="insertMember" parameterType="memberDto">
+    insert into tbl_member (
+        Id
+        ,Name
+        ,Email
+        ,Password
+        ,Sysidx
+    )
+    values (
+        #{Id}
+        ,#{Name}
+        ,#{Email}
+        ,#{Password}
+        ,idx_seq.NEXTVAL)
+  </insert>
+  <select id="loginMember" parameterType="memberDto" resultType="memberDto">
+    select * from tbl_member where Id = #{Id} and Password = #{Password}
+  </select>
+</mapper>

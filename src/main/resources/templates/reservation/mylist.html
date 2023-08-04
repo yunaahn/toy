@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns="http://www.thymeleaf.org" layout:decorate="~{/layout/layout.html}">
+  <head>
+    <title>Reservation</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  
+    <style>
+        table {
+        border-collapse: collapse;
+        }
+        td {
+          padding: 10px 0; /* 10px의 상하 여백을 줍니다. */
+        }
+      </style>
+
+</head>
+  <body>
+    <div layout:fragment="contents">
+      <div class="container">
+        My Reservation
+      </div>
+      <div class="row">
+        <main class="content">
+            <div class="container-fluid p-0">
+                <div id="resultTable">
+                    <!-- 결과를 테이블로 표시할 영역 -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    
+</div>
+
+<!-- 인원수 선택을 위한 셀렉트 박스 -->
+
+</body>
+</html>
+    <script>
+        
+        $(document).ready(function () {
+
+          var getUserId = getCookie('loggedUserId');
+          var getAmount = '';
+          
+            if(getUserId != undefined){
+               // alert(getUserId);
+                var form = $(this);
+                var url = form.attr('action');
+                var formData = form.serialize(); // 폼 데이터 직렬화
+
+                var formData = {id: getUserId};
+              
+                $.ajax({
+                    url: "/reservation/mylist",
+                    type: "POST",
+                    data: formData,
+                    dataType: "json", 
+                    success: function(response) {
+                        alert(1);
+                       console.log(response);
+                        // 요청이 성공했을 때의 처리
+                        var tableHtml = '<table>' +
+                        '<thead>' +
+                        '<tr>' +
+                        '<th>버스번호</th>' +
+                        '<th>출발지</th>' +
+                        '<th>도착지</th>' +
+                        '<th>날짜</th>' +
+                        '<th>인원</th>' +
+                        '</tr>' +
+                        '</thead>' +
+                        '<tbody>';
+
+                        // 응답 데이터를 테이블로 변환하여 추가
+                        for (var i = 0; i < response.length; i++) {
+                        var bus = response[i];
+                        
+                     
+                        
+                        tableHtml += '<tr>' +
+                        '<td>' + bus.busNo + '</td>' +
+                        '<td>' + bus.departure + '</td>' +
+                        '<td>' + bus.arrival + '</td>' +
+                        '<td>' + bus.busDate + '</td>' +
+                        '<td>' + bus.amount + '</td>' +
+                        '<td><a href="#" onclick="deleteReservation(' + parseInt(bus.idx) + ');' +
+                        'updateReservation(' + parseInt(bus.amount) + ', ' + parseInt(bus.idx) + ')">Delete</a></td>' +
+                        '</tr>';
+                            
+                        }
+
+                     
+                        tableHtml += '</tbody>' +
+                        '</table>';
+
+                        $('#resultTable').html(tableHtml);
+                        
+                    },
+                    error: function(xhr, status, error) {
+                        // 요청이 실패했을 때의 처리
+                        alert(0);
+                    }
+                 
+
+            });
+          }
+          else{
+            alert('로그인이 필요한 서비스 입니다.');
+          }
+        });
+
+        // 쿠키 가져오기 함수
+        function getCookie(name) {
+          const value = `; ${document.cookie}`;
+          const parts = value.split(`; ${name}=`);
+          if (parts.length === 2) return parts.pop().split(';').shift();
+        }
+
+        function deleteReservation(idx){
+            getIdx = idx;
+            //alert(getIdx);
+            $.ajax({
+            url: "/reservation/delete",
+            type: "POST",
+            data: { idx: getIdx},
+            success: function(result) {
+              alert('예약삭제되었습니다.');
+            },
+            error: function() {
+             alert('예약실패하였습니다.');
+            }
+          });
+        }
+        
+        function updateReservation(amount, idx){
+            alert(3);
+            getIdx = idx;
+            getAmount = amount;
+           // alert(getAmount);
+            $.ajax({
+            url: "/reservation/deleteupdate",
+            type: "POST",
+            data: { amount: getAmount, idx: getIdx},
+            success: function(result) {
+             // alert('예약삭제되었습니다.');
+            },
+            error: function() {
+             //alert('예약실패하였습니다.');
+            }
+          });
+        
+        }
+        
+        
+    </script>
+

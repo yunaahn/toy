@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns="http://www.thymeleaf.org" layout:decorate="~{/layout/layout.html}">
+  <head>
+    <title>Reservation</title>
+  </head>
+  <body>
+    <div layout:fragment="contents">
+      <div class="container">
+        Reservation
+      </div>
+      <div class="row">
+        <div class="col-12 col-lg-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Input</h5>
+                </div>
+                <div class="card-body">
+                    <input type="text" class="form-control" placeholder="Input">
+                    <input type="button" value="submit" class="btn btn-lg btn-primary">
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Selects</h5>
+                </div>
+                <div class="card-body">
+                    <select class="form-select mb-3">
+                        <option selected>Open this select menu</option>
+                        <option>One</option>
+                        <option>Two</option>
+                        <option>Three</option>
+                        </select>
+
+                    
+                </div>
+            </div>
+
+            
+        </div>
+    
+    </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Reservation</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <style>
+        .bus {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .row {
+            display: flex;
+        }
+
+        .seat {
+            width: 30px;
+            height: 30px;
+            border: 1px solid black;
+            margin: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .reserved {
+            background-color: red;
+        }
+
+        .available {
+            background-color: green;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>버스 좌석 예약 시스템</h1>
+    <div class="bus">
+        <!-- 좌석을 표시할 영역 -->
+    </div>
+
+    <button id="reserveButton">예약하기</button>
+
+    <script>
+        $(document).ready(function() {
+            var getidx = getUrlParameter('idx');
+            var intidx = parseInt(getidx, 10);
+            var formData = { idx: intidx };
+            var reservedSeats = []; // 예약된 좌석 번호를 저장할 배열
+
+            loadSeats(); // 좌석 정보를 가져올 때 호출
+
+            function getUrlParameter(name) {
+                const urlParams = new URLSearchParams(window.location.search);
+                return urlParams.get(name);
+            }
+
+            function loadSeats() {
+                // 좌석 정보를 가져오는 API 호출
+                $.ajax({
+                    url: "/reservation/details",
+                    method: "GET",
+                    data: formData,
+                    dataType: "json",
+                    success: function(data) {
+                        console.log(data); // 응답 데이터 확인
+
+                        // 좌석을 그리는 로직
+                        var busElement = $('.bus');
+                        var seatsTotal = data.SeatsTotal; // 총 좌석 수
+
+                        for (var i = 1; i <= seatsTotal; i++) {
+                            var seatElement = $('<div>', {
+                                class: 'seat available',
+                                text: i
+                            });
+                            busElement.append(seatElement);
+                        }
+
+                        // 클릭 이벤트 처리
+                        $('.seat.available').click(function() {
+                            $(this).toggleClass('reserved');
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        // 요청이 실패했을 때의 처리
+                        console.error(error);
+                    }
+                });
+            }
+
+            $('#reserveButton').click(function() {
+                var selectedSeats = $('.seat.reserved').map(function() {
+                    return parseInt($(this).text(), 10);
+                }).get();
+
+                console.log(selectedSeats);
+                // 여기에 선택된 좌석을 예약하는 로직을 추가할 수 있습니다.
+            });
+        });
+    </script>
+</body>
+</html>

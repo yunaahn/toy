@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns="http://www.thymeleaf.org" layout:decorate="~{/layout/layout.html}">
+  <head>
+    <title>Reservation</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  
+  <style>
+    table {
+    border-collapse: collapse;
+    }
+    td {
+      padding: 10px 0; /* 10px의 상하 여백을 줍니다. */
+    }
+    
+  </style>
+  </head>
+  <body>
+    <div layout:fragment="contents">
+      <div class="container">
+        일정예약
+      </div>
+      <div class="row">
+        <main class="content">
+            <div class="container-fluid p-0">
+                <form id="searchForm">
+                    <h1 class="h3 mb-3">일정을 선택해주세요. <input type="text" id="datepicker" name="datepicker"></h1>
+                    <button type="submit" class="">검색</button>
+                </form>
+                <div id="resultTable">
+                    <!-- 결과를 테이블로 표시할 영역 -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="amountSelect" style="display: none;">
+      <label for="amount">인원수 선택:</label>
+      <select id="amount" name="amount">
+        <option value="1">1명</option>
+        <option value="2">2명</option>
+        <option value="3">3명</option>
+        <option value="4">4명</option>
+        <option value="5">5명</option>
+        <option value="6">6명</option>
+        <option value="7">7명</option>
+        <option value="8">8명</option>
+        <option value="9">9명</option>
+        <option value="10">10명</option>
+      </select>
+      <input id="submitButton" style="display: none;" type="submit" value="제출" onclick="submitReservation();">
+    </div>
+</div>
+
+<!-- 인원수 선택을 위한 셀렉트 박스 -->
+
+</body>
+</html>
+    <script>
+        
+        $(document).ready(function () {
+
+          var isDatepickerInitialized = false;
+          var getIdx = '';
+          var loggedUserId = '';
+          var getAmount= '';
+          loggedUserId = getCookie('loggedUserId');
+         
+          
+            $('#datepicker').datepicker();
+          
+          
+            if(loggedUserId != null){
+                 
+            $('#searchForm').submit(function (event) {
+                event.preventDefault(); // 기본 폼 제출 동작 방지
+                var form = $(this);
+                var url = form.attr('action');
+                var formData = form.serialize(); // 폼 데이터 직렬화
+
+                var datepickerValue = $('#datepicker').val();
+                var formData = { datepicker: datepickerValue };
+              
+                $.ajax({
+                    url: "/reservation/list",
+                    method: "POST",
+                    data: formData,
+                    dataType: "json", 
+                    success: function(response) {
+                      $("#datepicker").datepicker("setDate", datepickerValue);
+                      
+                        // 요청이 성공했을 때의 처리
+                        var tableHtml = '<table>' +
+                        '<thead>' +
+                        '<tr>' +
+                        '<th>버스번호</th>' +
+                        '<th>출발지</th>' +
+                        '<th>도착지</th>' +
+                        '<th>날짜</th>' +
+                        '<th>인원</th>' +
+                        '<th>예약인원</th>' +
+                        '<th>남은인원</th>' +
+                        '<th>예약하기</th>' +
+                        '</tr>' +
+                        '</thead>' +
+                        '<tbody>';
+
+                        // 응답 데이터를 테이블로 변환하여 추가
+                        for (var i = 0; i < response.length; i++) {
+                        var bus = response[i];
+                        tableHtml += '<tr>' +
+                            '<td>' + bus.busNo + '</td>' +
+                            '<td>' + bus.departure + '</td>' +
+                            '<td>' + bus.arrival + '</td>' +
+                            '<td>' + bus.busDate + '</td>' +
+                            '<td>' + bus.seatsTotal + '</td>' +
+                            '<td>' + bus.booked + '</td>' +
+                            '<td>' + bus.remaining + '</td>' +
+                            '<td><a href="#" onclick="confirmReservation('+parseInt(bus.idx)+')">예약</a></td>'+
+ +
+                            '</tr>';
+                            
+                        }
+
+                       // 전역 변수 getIdx를 업데이트
+                        tableHtml += '</tbody>' +
+                        '</table>';
+
+                        $('#resultTable').html(tableHtml);
+                    },
+                    error: function(xhr, status, error) {
+                        alert('오류발생');
+                    }
+                    });
+
+            });
+          }
+          else{
+            alert('로그인이 필요한 서비스 입니다.');
+          }
+        });
+
+        // 쿠키 가져오기 함수
+        function getCookie(name) {
+          const value = `; ${document.cookie}`;
+          const parts = value.split(`; ${name}=`);
+          if (parts.length === 2) return parts.pop().split(';').shift();
+        }
+
+        //예약하기 버튼 누를 시 활성화 
+        function confirmReservation(idx) {
+          
+          getIdx = idx;
+          getUserId = getCookie('loggedUserId');
+          getAmount = 1; // 초기값
+          
+
+          if (confirm("인원수를 선택하세요.")) {
+            document.getElementById("amountSelect").style.display = "block";
+            document.getElementById("submitButton").style.display = "block";
+            document.getElementById("amount").addEventListener("change", function() {
+            getAmount = parseInt(this.value); // 변동 시 값 
+
+            });
+          }
+        }
+
+        function submitReservation(){
+          sendReservationRequest();
+          sendReservationInsert();
+        }
+
+        function sendReservationRequest() {
+
+          
+          $.ajax({
+            url: "/reservation/update",
+            type: "POST",
+            data: { idx: getIdx ,amount: getAmount},
+            success: function(result) {
+              
+            },
+            error: function() {
+              
+            }
+          });
+       
+        
+      }
+
+      function sendReservationInsert() {
+        alert(getAmount);
+            alert(getUserId);
+            alert(getIdx);
+          $.ajax({
+            url: "/reservation/insert",
+            type: "POST",
+            data: { amount: getAmount ,id: getUserId, idx:getIdx}, 
+            success: function(result) {
+           
+            },
+            error: function() {
+              reject(); 
+            }
+          });
+        }
+  
+    </script>
+

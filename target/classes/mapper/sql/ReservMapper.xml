@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pepe.demo.dao.PartialReservDao">
+ <select  id="reservedInfo" resultType="partialreservDto">
+     select 
+       r.seatsno as "SeatsNo"
+      ,r.reservationyn as "ReservationYn"
+      ,b.idx as "Idx"
+      ,b.SeatsTotal as "SeatsTotal"
+    from tbl_reservation_info R
+    right join tbl_bus B on r.idx = b.idx 
+    where b.idx = ${idx}
+ 
+ </select>
+<select  id="myreservedInfo" resultType="partialreservDto">
+    select 
+      B.busno as "BusNo"
+      ,b.arrival as "Arrival"
+      ,b.departure as "Departure"
+      ,b.busdate as "BusDate"
+      ,a.amount as "Amount"
+      ,a.idx as "Idx"
+    from tbl_reservation_info A
+    inner join tbl_bus B on a.IDX = b.IDX 
+    where a.id = #{id}
+</select>
+ <update id="updateSeats" parameterType="busDto">
+    BEGIN
+
+    UPDATE tbl_bus
+    SET 
+    Remaining = CASE WHEN Remaining IS NULL THEN CAST(seatstotal AS NUMBER) - ${amount}
+                ELSE Remaining - ${amount} 
+                END 
+    WHERE idx = ${idx};
+
+
+    UPDATE tbl_bus
+    SET 
+    booked = CASE WHEN booked IS NULL THEN COALESCE(booked, 0) + ${amount}
+             ELSE booked + ${amount} 
+             END 
+    WHERE idx = ${idx};
+
+    END;
+  </update>
+
+   <insert id="insertReservation" parameterType="partialreservDto">
+    insert into tbl_reservation_info (
+        ReservationIdx
+        ,Amount
+        ,Id
+        ,Idx
+    )
+    values (
+        IDX_RESEVATION.NEXTVAL
+        ,#{amount}
+        ,#{Id}
+        ,#{Idx})
+  </insert>
+
+  <delete id="deleteInfo" parameterType="partialreservDto">
+   
+      delete from tbl_reservation_info where idx = #{idx}
+  </delete>
+
+   
+  <update id="updateInfo" parameterType="partialreservDto">
+    BEGIN
+      UPDATE tbl_bus
+      SET 
+      Remaining = Remaining - #{amount} 
+      WHERE idx = #{idx};
+      
+      UPDATE tbl_bus
+      SET 
+      booked = booked - #{amount}
+      WHERE idx = #{idx};
+    END; 
+  </update>
+
+
+
+
+</mapper>
