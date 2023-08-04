@@ -8,7 +8,6 @@
     <typeAlias type="com.pepe.demo.dto.BusDto" alias="busDto" />
     <typeAlias type="com.pepe.demo.dto.ReservDto" alias="reservDto" />
     <typeAlias type="com.pepe.demo.dto.PartialReservDto" alias="partialreservDto" />
-
-    
+    <typeAlias type="com.pepe.demo.dto.BoardDto" alias="boardDto" />
   </typeAliases>
 </configuration>
