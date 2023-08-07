@@ -8,6 +8,7 @@ import com.pepe.demo.dto.BoardDto;
 
 @Mapper
 public interface BoardDao {
+    int writenoticeBoard(BoardDto boardDto);
     int writeBoard(BoardDto boardDto);
     List<BoardDto> getBoardList();
     int getMaxGroup();

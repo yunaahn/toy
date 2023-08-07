@@ -24,7 +24,7 @@ public class BoardDto {
 
   private String regDate;
   private int hit;
-  private int available; //1. 글 존재 , 0: 글 삭제
+  private int type; //1. 공지 , 0: 일반
   private int num; //순서정하기
 
 //   @NotEmpty(message = "필수 입력사항입니다.")

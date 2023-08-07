@@ -17,19 +17,38 @@
       #{boardStep}, -->
       SYSDATE,
       0,
-      1,
+      0,
+      1
+    )
+  </insert>
+    <insert id="writenoticeBoard" parameterType="boardDto">
+    insert into TBL_BOARD values (
+      BOARD_SEQ.NEXTVAL,
+      #{userName},
+      #{title},
+      #{contents},
+      '',
+      '',
+      '',
+      <!-- #{boardGroup},
+      #{boardLevel},
+      #{boardStep}, -->
+      SYSDATE,
+      0,
       1,
       1
     )
   </insert>
-  
   <select id="getBoardList" resultType="boardDto">
   select * from TBL_BOARD 
   </select>
 
   <update id="updateHit" parameterType="integer">
-  update TBL_BOARD set hit = hit +1 where no = #{no}
+  UPDATE "TBL_BOARD" SET "hit" = "hit" + 1 WHERE "NO" = #{no}
   </update>
 
+  <select id="getBoardOne" resultType="boardDto" parameterType="integer">
+  select * from TBL_BOARD where "NO" = #{no}
+  </select>
 
 </mapper>

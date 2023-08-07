@@ -5,6 +5,7 @@ import java.util.List;
 import com.pepe.demo.dto.BoardDto;
 
 public interface BoardService {
+    int writenoticeBoard(BoardDto boardDto);
     int writeBoard(BoardDto boardDto);
     List<BoardDto> getBoardList();
     int getMaxGroup();

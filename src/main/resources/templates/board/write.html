@@ -6,12 +6,13 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
   </head>
   <body>
     <div layout:fragment="contents">
       <div class="container">
         <!-- 여기서 부터 달라지는 내용 -->
-        <h2>BOARD WRITE</h2>
+        <h2>게시글 작성</h2>
         <form action="/board/write" th:object="${boardDto}" method="post">
           <div class="mb-3">
             <label for="exampleFormControlInput1" class="form-label">아이디</label>
@@ -27,7 +28,7 @@
           </div>
           <div class="mb-3">
             <label for="contents" class="form-label">내용</label>
-            <textarea class="form-control" id="contents" placeholder="내용을 입력해 주세요." name="contents" th:value="${boardDto.contents}"></textarea>
+            <textarea class="form-control contents" id="contents" placeholder="내용을 입력해 주세요." name="contents" th:value="${boardDto.contents}"></textarea>
             <p th:if="${#fields.hasErrors('contents')}" th:errors="*{contents}" class="error">에러 메세지 출력</p>
           </div>
               <div class="text-center">

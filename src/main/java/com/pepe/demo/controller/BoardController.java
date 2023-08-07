@@ -39,6 +39,26 @@ public class BoardController {
       int result = boardService.writeBoard(boardDto);
       return "redirect:/board/list";
     }
+
+    @GetMapping("/board/noticewrite")
+    public String noticewrite(Model model) {
+      model.addAttribute("boardDto", new BoardDto());
+      return "/board/noticewrite";
+    }
+  
+    @PostMapping("/board/noticewrite")
+    public String noticewriteProcess(
+      @Valid BoardDto boardDto,
+      BindingResult bindingResult,
+      Model model
+    ) {
+      if (bindingResult.hasErrors()) {
+        model.addAttribute("boardDto", boardDto);
+        return "/board/noticewrite";
+      }
+      int result = boardService.writenoticeBoard(boardDto);
+      return "redirect:/board/noticewrite";
+    }
     
     @GetMapping("/board/notice")
     public String noticelist(Model model) {

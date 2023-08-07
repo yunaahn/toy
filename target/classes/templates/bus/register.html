@@ -2,18 +2,25 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns="http://www.thymeleaf.org" layout:decorate="~{/layout/layout.html}">
   <head>
     <title>Reservation</title>
+    <script src="/js/common.js"></script>
+    <style>
+
+        h6{
+            margin-top: 2px;
+            margin-bottom: 2px;
+        }
+        .form-control{
+            width: 400px;
+        }
+
+        
+    </style>
   </head>
   <body>
     <div layout:fragment="contents">
-      <!-- <div class="container">
-        ADMIN
-      </div> -->
-      <div class="row">
-        <div class="col-12 col-lg-6">
-            <div class="card">
-                <div class="card-header">
-                    <h5 class="card-title mb-0">일 정 등 록</h5>
-                </div>
+        <div class="container">
+                    <h2>일정등록</h2>
+               
                 <div class="card-body">
                     <form action="/bus/register" th:object="${busDto}" method="post">
                         <h6>버스번호</h6>
@@ -28,47 +35,7 @@
                         <h6>일정을 선택해주세요. <input type="text" id="datepicker" name="BusDate" th:value="${busDto?.BusDate}"></h6>
                         <button type="submit" value="submit" class="btn btn-lg btn-primary">제출</button> 
                     </form>
-                </div>
-            </div>
-
-            <!-- <div class="card">
-                <div class="card-header">
-                    <h5 class="card-title mb-0">Selects</h5>
-                </div>
-                <div class="card-body">
-                    <select class="form-select mb-3">
-                        <option selected>Open this select menu</option>
-                        <option>One</option>
-                        <option>Two</option>
-                        <option>Three</option>
-                    </select>
-
-                    
-                </div>
-            </div>
-
-            
-        </div>
-        <main class="content">
-            <div class="container-fluid p-0">
-
-                <h1 class="h3 mb-3">Blank Page</h1>
-
-                <div class="row">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <h5 class="card-title mb-0">Empty card</h5>
-                            </div>
-                            <div class="card-body">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </main> -->
-    </div>
+             </div>
 </div>
 </div>
 </body>

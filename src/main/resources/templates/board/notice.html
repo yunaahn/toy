@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns="http://www.thymeleaf.org" layout:decorate="~{/layout/layout.html}">
   <head>
-    <title>HOME</title>
+    <title>NOTICE</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
@@ -12,7 +12,7 @@
     <div layout:fragment="contents">
       <div class="container">
         <!-- 여기서 부터 달라지는 내용 -->
-        <h2>BOARD LIST</h2>
+        <h2>공지사항</h2>
         <table class="table table-striped">
           <colgroup>
             <col />
@@ -24,10 +24,10 @@
           <thead>
             <tr>
               <th scope="col">No</th>
-              <th scope="col">TITLE</th>
-              <th scope="col">WRITER</th>
-              <th scope="col">DATE</th>
-              <th scope="col">HIT</th>
+              <th scope="col">제목</th>
+              <th scope="col">작성자</th>
+              <th scope="col">작성일</th>
+              <th scope="col">조회수</th>
             </tr>
           </thead>
           <tbody>

@@ -36,17 +36,28 @@ public class MemberController {
 
     @PostMapping("/member/signin")
     @ResponseBody
-    public String signinProcess(@RequestBody MemberDto memberDto, HttpSession session) {
+    public String signinProcess(@RequestBody MemberDto memberDto, HttpSession session
+    , HttpServletResponse response) {
         MemberDto loggedMember = memberService.loginMember(memberDto);
         if (loggedMember != null) {
             session.setAttribute("loggedMember", loggedMember);
             Cookie cookie = new Cookie("loggedUserId", loggedMember.getId());
+
+            int adminYn = loggedMember.getAdminYn();
+            Cookie getAdminYn = new Cookie("getAdminYn", String.valueOf(adminYn));
+
             cookie.setMaxAge(60*60*24);
             cookie.setPath("/");
+
+            getAdminYn.setMaxAge(60*60*24);
+            getAdminYn.setPath("/");
+
             response.addCookie(cookie);
-            //response.addCookie(cookie);
+            response.addCookie(getAdminYn);
+
+
             log.info(loggedMember.toString());
-            return "success";
+            return "loggedMember";
         }
     
         return "failure";
@@ -90,6 +101,12 @@ public class MemberController {
         cookie.setMaxAge(0);
         cookie.setPath("/");
         response.addCookie(cookie);
+
+        int adminYn = loggedMember.getAdminYn();
+        Cookie getAdminYn = new Cookie("getAdminYn", String.valueOf(adminYn));
+        getAdminYn.setMaxAge(0);
+        getAdminYn.setPath("/");
+        response.addCookie(getAdminYn);
       } else {
         System.out.println("세션에 저장된 username이 없습니다.");
       }

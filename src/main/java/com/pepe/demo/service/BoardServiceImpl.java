@@ -13,11 +13,18 @@ public class BoardServiceImpl implements BoardService {
 
     @Autowired
     BoardDao boardDao;
-
+    
     @Override
     public int writeBoard(BoardDto boardDto) {
         //boardDto.setBoardGroup(getMaxGroup() + 1); //글쓰면 증가
         int result = boardDao.writeBoard(boardDto);
+        return result;
+    }
+
+    @Override
+    public int writenoticeBoard(BoardDto boardDto) {
+        //boardDto.setBoardGroup(getMaxGroup() + 1); //글쓰면 증가
+        int result = boardDao.writenoticeBoard(boardDto);
         return result;
     }
     @Override
