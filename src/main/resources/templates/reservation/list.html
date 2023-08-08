@@ -13,11 +13,25 @@
       border-collapse: collapse;
       }
       td {
-        padding: 10px 10px; /* 10px의 상하 여백을 줍니다. */
+        padding: 10px 10px; 
       }
       th {
-        padding: 10px 10px; /* 10px의 상하 여백을 줍니다. */
+        padding: 10px 10px; 
       }
+
+      .container {
+  display: flex;
+  align-items: center;
+}
+
+.search {
+  margin-left: 10px; 
+}
+
+img{
+			size: 30px;
+			height: 30px;
+		}
       
     </style>
   </head>
@@ -30,8 +44,11 @@
         <main class="content">
             <div class="container-fluid p-0">
                 <form id="searchForm">
-                    <h1 class="h3 mb-3">일정을 선택해주세요. <input type="text" id="datepicker" name="datepicker"></h1>
-                    <button type="submit" class="">검색</button>
+                    <h3 class="h3 mb-3">
+                      <img src="/img/icons/free-icon-bus-stop-3448306.png" alt="이미지 설명">
+                      일정을 선택해주세요. <input type="text" id="datepicker" name="datepicker" class="datepicker">
+                      <button type="submit" class="button" id="search">검색</button></h3>
+                    
                 </form>
                 <div id="resultTable">
                     <!-- 결과를 테이블로 표시할 영역 -->
@@ -95,7 +112,7 @@
                       $("#datepicker").datepicker("setDate", datepickerValue);
                       
                         // 요청이 성공했을 때의 처리
-                        var tableHtml = '<table>' +
+                        var tableHtml = '<table class="table">' +
                         '<thead>' +
                         '<tr>' +
                         '<th>버스번호</th>' +
@@ -121,12 +138,10 @@
                             '<td>' + bus.seatsTotal + '</td>' +
                             '<td>' + bus.booked + '</td>' +
                             '<td>' + bus.remaining + '</td>' +
-                            '<td><a href="#" onclick="confirmReservation('+parseInt(bus.idx)+')">예약</a></td>'+
- +
-                            '</tr>';
+                            '<td><a href="#" onclick="confirmReservation('+parseInt(bus.idx)+')">예약</a></td>'+'</tr>';
                             
                         }
-
+                        $('#datepicker').datepicker();
                        // 전역 변수 getIdx를 업데이트
                         tableHtml += '</tbody>' +
                         '</table>';

@@ -30,7 +30,7 @@
       <div class="row">
         <main class="content">
             <div class="container-fluid p-0">
-                <div id="resultTable" class="table">
+                <div id="resultTable">
                     <!-- 결과를 테이블로 표시할 영역 -->
                 </div>
             </div>
@@ -93,8 +93,7 @@
                         '<td>' + bus.busDate + '</td>' +
                         '<td>' + bus.amount + '</td>' +
                         '<td><a href="#" onclick="deleteReservation(' + parseInt(bus.idx) + ');' +
-                        'updateReservation(' + parseInt(bus.amount) + ', ' + parseInt(bus.idx) + ')">취소</a></td>' +
-                        '</tr>';
+                        'updateReservation(' + parseInt(bus.amount) + ', ' + parseInt(bus.idx) + ')">취소</a></td>'+'</tr>';
                             
                         }
 

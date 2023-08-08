@@ -39,6 +39,7 @@
         ,Departure
         ,Arrival
         ,BusDate
+        ,SeatsTotal
         ,Booked
         ,Remaining
         ,idx

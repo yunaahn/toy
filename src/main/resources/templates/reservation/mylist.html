@@ -67,7 +67,7 @@
                     success: function(response) {
                        console.log(response);
                         // 요청이 성공했을 때의 처리
-                        var tableHtml = '<table>' +
+                        var tableHtml = '<table class="table">' +
                         '<thead>' +
                         '<tr>' +
                         '<th>버스번호</th>' +
@@ -93,8 +93,7 @@
                         '<td>' + bus.busDate + '</td>' +
                         '<td>' + bus.amount + '</td>' +
                         '<td><a href="#" onclick="deleteReservation(' + parseInt(bus.idx) + ');' +
-                        'updateReservation(' + parseInt(bus.amount) + ', ' + parseInt(bus.idx) + ')">취소</a></td>' +
-                        '</tr>';
+                        'updateReservation(' + parseInt(bus.amount) + ', ' + parseInt(bus.idx) + ')">취소</a></td>'+'</tr>';
                             
                         }
 

@@ -3,6 +3,15 @@
   <head>
     <title>Reservation</title>
     <script src="/js/common.js"></script>
+    <script>
+        $(function(){
+           $("#datepicker").datepicker({
+               dateFormat: "yy-mm-dd", // 날짜 형식 설정
+           });
+         })
+       
+   </script>
+   
     <style>
 
         h6{
@@ -16,6 +25,8 @@
         
     </style>
   </head>
+
+
   <body>
     <div layout:fragment="contents">
         <div class="container">
