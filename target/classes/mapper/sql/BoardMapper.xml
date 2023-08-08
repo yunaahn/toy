@@ -17,6 +17,25 @@
       #{boardStep}, -->
       SYSDATE,
       0,
+      0,
+      1
+    )
+  </insert>
+
+    <insert id="writenoticeBoard" parameterType="boardDto">
+    insert into TBL_BOARD values (
+      BOARD_SEQ.NEXTVAL,
+      #{userName},
+      #{title},
+      #{contents},
+      '',
+      '',
+      '',
+      <!-- #{boardGroup},
+      #{boardLevel},
+      #{boardStep}, -->
+      SYSDATE,
+      0,
       1,
       1
     )

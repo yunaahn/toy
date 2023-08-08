@@ -40,25 +40,25 @@ public class BoardController {
       return "redirect:/board/list";
     }
 
-    // @GetMapping("/board/writenotice")
-    // public String noticewrite(Model model) {
-    //   model.addAttribute("boardDto", new BoardDto());
-    //   return "/board/writenotice";
-    // }
+    @GetMapping("/board/writenotice")
+    public String noticewrite(Model model) {
+      model.addAttribute("boardDto", new BoardDto());
+      return "/board/writenotice";
+    }
   
-    // @PostMapping("/board/writenotice")
-    // public String noticewriteProcess(
-    //   @Valid BoardDto boardDto,
-    //   BindingResult bindingResult,
-    //   Model model
-    // ) {
-    //   if (bindingResult.hasErrors()) {
-    //     model.addAttribute("boardDto", boardDto);
-    //     return "/board/writenotice";
-    //   }
-    //   int result = boardService.writeBoard(boardDto);
-    //   return "redirect:/board/writenotice";
-    // }
+    @PostMapping("/board/writenotice")
+    public String noticewriteProcess(
+      @Valid BoardDto boardDto,
+      BindingResult bindingResult,
+      Model model
+    ) {
+      if (bindingResult.hasErrors()) {
+        model.addAttribute("boardDto", boardDto);
+        return "/board/writenotice";
+      }
+      int result = boardService.writenoticeBoard(boardDto);
+      return "redirect:/board/writenotice";
+    }
     
     
   

@@ -21,12 +21,12 @@ public class BoardServiceImpl implements BoardService {
         return result;
     }
 
-    // @Override
-    // public int writenoticeBoard(BoardDto boardDto) {
-    //     //boardDto.setBoardGroup(getMaxGroup() + 1); //글쓰면 증가
-    //     int result = boardDao.writenoticeBoard(boardDto);
-    //     return result;
-    // }
+    @Override
+    public int writenoticeBoard(BoardDto boardDto) {
+        //boardDto.setBoardGroup(getMaxGroup() + 1); //글쓰면 증가
+        int result = boardDao.writenoticeBoard(boardDto);
+        return result;
+    }
     @Override
     public int getMaxGroup() {
       int max = boardDao.getMaxGroup();
