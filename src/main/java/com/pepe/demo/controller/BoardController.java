@@ -40,32 +40,28 @@ public class BoardController {
       return "redirect:/board/list";
     }
 
-    @GetMapping("/board/noticewrite")
-    public String noticewrite(Model model) {
-      model.addAttribute("boardDto", new BoardDto());
-      return "/board/noticewrite";
-    }
+    // @GetMapping("/board/writenotice")
+    // public String noticewrite(Model model) {
+    //   model.addAttribute("boardDto", new BoardDto());
+    //   return "/board/writenotice";
+    // }
   
-    @PostMapping("/board/noticewrite")
-    public String noticewriteProcess(
-      @Valid BoardDto boardDto,
-      BindingResult bindingResult,
-      Model model
-    ) {
-      if (bindingResult.hasErrors()) {
-        model.addAttribute("boardDto", boardDto);
-        return "/board/noticewrite";
-      }
-      int result = boardService.writenoticeBoard(boardDto);
-      return "redirect:/board/noticewrite";
-    }
+    // @PostMapping("/board/writenotice")
+    // public String noticewriteProcess(
+    //   @Valid BoardDto boardDto,
+    //   BindingResult bindingResult,
+    //   Model model
+    // ) {
+    //   if (bindingResult.hasErrors()) {
+    //     model.addAttribute("boardDto", boardDto);
+    //     return "/board/writenotice";
+    //   }
+    //   int result = boardService.writeBoard(boardDto);
+    //   return "redirect:/board/writenotice";
+    // }
     
-    @GetMapping("/board/notice")
-    public String noticelist(Model model) {
-        List<BoardDto> boardList = boardService.getBoardList();
-        model.addAttribute("boardList", boardList);
-        return "/board/notice";
-    }
+    
+  
 
     @GetMapping("/board/list")
     public String list(Model model) {
@@ -73,6 +69,14 @@ public class BoardController {
         model.addAttribute("boardList", boardList);
         return "/board/list";
     }
+
+    @GetMapping("/board/notice")
+    public String noticelist(Model model) {
+        List<BoardDto> noticeList = boardService.getNoticeList();
+        model.addAttribute("noticeList", noticeList);
+        return "/board/notice";
+    }
+    
     @GetMapping("/board/view")
     public String view(Model model, int no) {
       BoardDto boardDto = boardService.getBoardOne(no);

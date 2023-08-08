@@ -34,6 +34,11 @@
         .contents{
             height: 300px;
         }
+
+		.sidebar-nav {
+		flex-grow: 0;
+		}
+
 	</style>
 	
 </head>
@@ -80,7 +85,7 @@
 				   </li>
 
 				   <li class="sidebar-item">
-					   <a class="sidebar-link" href="/member/signup">
+					   <a class="sidebar-link" href="/board/list">
 							 <i class="align-middle" data-feather="check-square"></i> <span class="align-middle">Q & A</span>
 						  </a>
 				   </li>
@@ -100,19 +105,31 @@
 
 				</ul>
 				
-				
+				<ul class="sidebar-nav">
+					<th:block th:each="cookie : ${#request.getCookies()}">
+						<th:block th:if="${cookie.name == 'getAdminYn' and cookie.value == '1'}">
+							<!-- 쿠키 조건에 해당하는 내용을 여기에 추가 -->
+							<li class="sidebar-header">
+								관리자 페이지
+							</li>
+		
+		
+							<li class="sidebar-item">
+								<a class="sidebar-link" href="/bus/register">
+							  <i class="align-middle" data-feather="check-square"></i> <span class="align-middle">일정등록하기</span>
+								</a>
+							
+
+							<li class="sidebar-item">
+								<a class="sidebar-link" href="/board/writenotice">
+							  <i class="align-middle" data-feather="check-square"></i> <span class="align-middle">공지사항작성</span>
+								</a>
+							</li>
+						</th:block>
+					</th:block>
+				</ul>
+
 				<ul class="sidebar-nav" th:if="${session.loggedMember!=null}">
-					
-					<li class="sidebar-header">
-						관리자 페이지
-					</li>
-
-
-					<li class="sidebar-item">
-						<a class="sidebar-link" href="/bus/register">
-              		<i class="align-middle" data-feather="check-square"></i> <span class="align-middle">일정등록하기</span>
-            			</a>
-					</li>
 
 					<li class="sidebar-header">
 						공지사항
@@ -130,7 +147,7 @@
 				   </li>
 
 				   <li class="sidebar-item">
-					   <a class="sidebar-link" href="/member/signup">
+					   <a class="sidebar-link" href="/board/list">
 							 <i class="align-middle" data-feather="check-square"></i> <span class="align-middle">Q & A</span>
 						  </a>
 				   </li>
@@ -155,31 +172,7 @@
 			</div>
 		</nav>
 		<div class="main">
-			<nav class="navbar navbar-expand navbar-light navbar-bg"   th:if="${#request.getCookies()== null}" >
-				<a class="sidebar-toggle js-sidebar-toggle">
-          			<i class="hamburger align-self-center"></i>
-        		</a>
-
-				<div class="navbar-collapse collapse">
-					<ul class="navbar-nav navbar-align">
-						<li class="nav-item dropdown">
-							
-						</li>
-						<li class="nav-item dropdown">
-							
-						</li>
-						<li class="nav-item dropdown">
-							<a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#" data-bs-toggle="dropdown">
-               					 <i class="align-middle" data-feather="settings"></i>
-            				</a>
-							
-							<a class="dropdown-item" href="/member/signin">로그인</a>
-							
-						</li>
-					</ul>
-				</div>
-			</nav>
-
+		
 			<nav class="navbar navbar-expand navbar-light navbar-bg" th:if="${session.loggedMember!=null}" >
 				<a class="sidebar-toggle js-sidebar-toggle">
           			<i class="hamburger align-self-center"></i>

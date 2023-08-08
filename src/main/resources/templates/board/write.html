@@ -6,7 +6,11 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-
+<style>
+    #selected{
+        width: 150px;
+    }
+</style>
   </head>
   <body>
     <div layout:fragment="contents">
@@ -31,11 +35,18 @@
             <textarea class="form-control contents" id="contents" placeholder="내용을 입력해 주세요." name="contents" th:value="${boardDto.contents}"></textarea>
             <p th:if="${#fields.hasErrors('contents')}" th:errors="*{contents}" class="error">에러 메세지 출력</p>
           </div>
-              <div class="text-center">
+          <div class="text-center">
             <button class="btn btn-primary">작성하기</button>
             <button class="btn btn-secondary" type="reset">재작성</button>
           </div>
-          
+          <div class="mb-3" id="selected">
+            <label for="type" class="form-label">게시글타입</label>
+            <select class="form-select" id="type" name="type" th:value="${boardDto.type}">
+                <option value="0" th:selected="${boardDto.type == 0}">게시글</option>
+                <option value="1" th:selected="${boardDto.type == 1}">공지</option>
+            </select>
+        </div>
+        
         </form>
 
        

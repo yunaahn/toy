@@ -35,12 +35,12 @@
             height: 300px;
         }
 
-		.sidebar-nav{
-			flex-grow: 0;
-
+		.sidebar-nav {
+		flex-grow: 0;
 		}
-	</style>
 
+	</style>
+	
 </head>
 
 <body>
@@ -50,9 +50,8 @@
 				<a class="sidebar-brand" href="#">
           <span class="align-middle">멀티버스</span>
         </a>
-
-		
-			
+			<!-- <div th:if="${session.loggedMember.AdminYn==1}">admin</div>
+			<div th:if="${session.loggedMember.AdminYn==0}">N</div> -->
 				<ul class="sidebar-nav" th:if="${session.loggedMember==null}">
 					<li class="sidebar-header">
 						 내 정보
@@ -73,7 +72,7 @@
 					<li class="sidebar-header">
 						공지사항
 				   </li>
-
+				   
 				   <li class="sidebar-item">
 						<a class="sidebar-link" href="/board/notice">
 						  <i class="align-middle" data-feather="check-square"></i> <span class="align-middle">공지사항</span>
@@ -86,12 +85,12 @@
 				   </li>
 
 				   <li class="sidebar-item">
-					   <a class="sidebar-link" href="/member/signup">
+					   <a class="sidebar-link" href="/board/list">
 							 <i class="align-middle" data-feather="check-square"></i> <span class="align-middle">Q & A</span>
 						  </a>
 				   </li>
 
-
+					
 
 					<li class="sidebar-header">
 						예약 관리
@@ -105,6 +104,7 @@
 					</li>
 
 				</ul>
+				
 				<ul class="sidebar-nav">
 					<th:block th:each="cookie : ${#request.getCookies()}">
 						<th:block th:if="${cookie.name == 'getAdminYn' and cookie.value == '1'}">
@@ -121,7 +121,7 @@
 							
 
 							<li class="sidebar-item">
-								<a class="sidebar-link" href="/board/noticewrite">
+								<a class="sidebar-link" href="/board/writenotice">
 							  <i class="align-middle" data-feather="check-square"></i> <span class="align-middle">공지사항작성</span>
 								</a>
 							</li>
@@ -129,15 +129,12 @@
 					</th:block>
 				</ul>
 
-				
 				<ul class="sidebar-nav" th:if="${session.loggedMember!=null}">
-
-					
 
 					<li class="sidebar-header">
 						공지사항
 				   </li>
-
+				   
 				   <li class="sidebar-item">
 						<a class="sidebar-link" href="/board/notice">
 						  <i class="align-middle" data-feather="check-square"></i> <span class="align-middle">공지사항</span>
@@ -150,7 +147,7 @@
 				   </li>
 
 				   <li class="sidebar-item">
-					   <a class="sidebar-link" href="/member/signup">
+					   <a class="sidebar-link" href="/board/list">
 							 <i class="align-middle" data-feather="check-square"></i> <span class="align-middle">Q & A</span>
 						  </a>
 				   </li>
@@ -171,35 +168,11 @@
               				<i class="align-middle" data-feather="grid"></i> <span class="align-middle">나의 예약관리</span>
             			</a>
 					</li>
-				</ul>
+				</ul>			
 			</div>
 		</nav>
 		<div class="main">
-			<nav class="navbar navbar-expand navbar-light navbar-bg"   th:if="${#request.getCookies()== null}" >
-				<a class="sidebar-toggle js-sidebar-toggle">
-          			<i class="hamburger align-self-center"></i>
-        		</a>
-
-				<div class="navbar-collapse collapse">
-					<ul class="navbar-nav navbar-align">
-						<li class="nav-item dropdown">
-
-						</li>
-						<li class="nav-item dropdown">
-
-						</li>
-						<li class="nav-item dropdown">
-							<a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#" data-bs-toggle="dropdown">
-               					 <i class="align-middle" data-feather="settings"></i>
-            				</a>
-
-							<a class="dropdown-item" href="/member/signin">로그인</a>
-
-						</li>
-					</ul>
-				</div>
-			</nav>
-
+		
 			<nav class="navbar navbar-expand navbar-light navbar-bg" th:if="${session.loggedMember!=null}" >
 				<a class="sidebar-toggle js-sidebar-toggle">
           			<i class="hamburger align-self-center"></i>
@@ -208,19 +181,19 @@
 				<div class="navbar-collapse collapse">
 					<ul class="navbar-nav navbar-align">
 						<li class="nav-item dropdown">
-
+							
 						</li>
 						<li class="nav-item dropdown">
-
+							
 						</li>
 						<li class="nav-item dropdown">
 							<a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#" data-bs-toggle="dropdown">
                					 <i class="align-middle" data-feather="settings"></i>
             				</a>
-
-
+							
+							
 							<p th:text="${session.loggedMember.Name + '님 안녕하세요!'}"></p> <a class="dropdown-item" href="/member/logout">로그아웃</a>
-
+							
 						</li>
 					</ul>
 				</div>
@@ -228,7 +201,7 @@
 
 		<div class="contents" layout:fragment="contents"></div>
 
-
+			
 		</div>
 	</div>
 </body>
@@ -239,11 +212,11 @@
 				dateFormat: "yy-mm-dd", // 날짜 형식 설정
     		});
       	})
-
+		
 	</script>
-
-
-
+	
+		
+	
 
 </body>
 

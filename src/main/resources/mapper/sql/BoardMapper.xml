@@ -18,18 +18,25 @@
       SYSDATE,
       0,
       1,
-      1,
       1
     )
   </insert>
   
   <select id="getBoardList" resultType="boardDto">
-  select * from TBL_BOARD 
+  select * from TBL_BOARD where "type"= 0
+  </select>
+
+    <select id="getNoticeList" resultType="boardDto">
+  select * from TBL_BOARD where "type"= 1
   </select>
 
   <update id="updateHit" parameterType="integer">
-  update TBL_BOARD set hit = hit +1 where no = #{no}
+  update TBL_BOARD set "hit" = "hit" +1 where no = #{no}
   </update>
+
+   <select id="getBoardOne" resultType="boardDto" parameterType="integer">
+  select * from TBL_BOARD where no = #{no}
+  </select>
 
 
 </mapper>

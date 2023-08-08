@@ -21,12 +21,12 @@ public class BoardServiceImpl implements BoardService {
         return result;
     }
 
-    @Override
-    public int writenoticeBoard(BoardDto boardDto) {
-        //boardDto.setBoardGroup(getMaxGroup() + 1); //글쓰면 증가
-        int result = boardDao.writenoticeBoard(boardDto);
-        return result;
-    }
+    // @Override
+    // public int writenoticeBoard(BoardDto boardDto) {
+    //     //boardDto.setBoardGroup(getMaxGroup() + 1); //글쓰면 증가
+    //     int result = boardDao.writenoticeBoard(boardDto);
+    //     return result;
+    // }
     @Override
     public int getMaxGroup() {
       int max = boardDao.getMaxGroup();
@@ -37,6 +37,12 @@ public class BoardServiceImpl implements BoardService {
     public List<BoardDto> getBoardList() {
         List<BoardDto> boardList = boardDao.getBoardList();
         return boardList;
+    }
+
+    @Override
+    public List<BoardDto> getNoticeList() {
+        List<BoardDto> noticeList = boardDao.getNoticeList();
+        return noticeList;
     }
 
     @Override
@@ -52,6 +58,8 @@ public class BoardServiceImpl implements BoardService {
     int result = boardDao.updateHit(no);
     return result;
   }
+
+
   
     
     

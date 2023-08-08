@@ -8,18 +8,7 @@
     <script src="/js/common.js"></script>
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   
-    <style>
-      table {
-      border-collapse: collapse;
-      }
-      td {
-        padding: 10px 10px; /* 10px의 상하 여백을 줍니다. */
-      }
-      th {
-        padding: 10px 10px; /* 10px의 상하 여백을 줍니다. */
-      }
-      
-    </style>
+ 
   </head>
   <body>
     <div layout:fragment="contents">
@@ -30,10 +19,10 @@
         <main class="content">
             <div class="container-fluid p-0">
                 <form id="searchForm">
-                    <h1 class="h3 mb-3">일정을 선택해주세요. <input type="text" id="datepicker" name="datepicker"></h1>
+                    <h1 class="h3 mb-3">일정을 선택해주세요. <input type="text" id="datepicker" name="datepicker" class="datepicker nontranslate"></h1>
                     <button type="submit" class="">검색</button>
                 </form>
-                <div id="resultTable">
+                <div id="resultTable" class="datepicker nontranslate">
                     <!-- 결과를 테이블로 표시할 영역 -->
                 </div>
             </div>
@@ -72,16 +61,16 @@
           loggedUserId = getCookie('loggedUserId');
          
           
-            $('#datepicker').datepicker();
+           // $('#datepicker').datepicker();
           
           
             if(loggedUserId != null){
                  
             $('#searchForm').submit(function (event) {
-                event.preventDefault(); // 기본 폼 제출 동작 방지
+                event.preventDefault(); 
                 var form = $(this);
                 var url = form.attr('action');
-                var formData = form.serialize(); // 폼 데이터 직렬화
+                var formData = form.serialize(); 
 
                 var datepickerValue = $('#datepicker').val();
                 var formData = { datepicker: datepickerValue };
@@ -92,10 +81,8 @@
                     data: formData,
                     dataType: "json", 
                     success: function(response) {
-                      $("#datepicker").datepicker("setDate", datepickerValue);
                       
-                        // 요청이 성공했을 때의 처리
-                        var tableHtml = '<table>' +
+                        var tableHtml = '<table class="table">' +
                         '<thead>' +
                         '<tr>' +
                         '<th>버스번호</th>' +
@@ -110,7 +97,7 @@
                         '</thead>' +
                         '<tbody>';
 
-                        // 응답 데이터를 테이블로 변환하여 추가
+                        
                         for (var i = 0; i < response.length; i++) {
                         var bus = response[i];
                         tableHtml += '<tr>' +
@@ -127,7 +114,7 @@
                             
                         }
 
-                       // 전역 변수 getIdx를 업데이트
+                       
                         tableHtml += '</tbody>' +
                         '</table>';
 
