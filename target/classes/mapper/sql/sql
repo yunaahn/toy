@@ -177,3 +177,82 @@ Insert into PEPE.TBL_RESERVATION_INFO (RESERVATIONIDX,SEATSNO,RESERVATIONYN,ID,B
   ALTER TABLE "PEPE"."TBL_RESERVATION_INFO" ADD CONSTRAINT "TBL_RESERVATION_INFO_FK1" FOREIGN KEY ("BUSIDX")
 	  REFERENCES "PEPE"."TBL_BUS" ("IDX") ENABLE;
 
+
+  CREATE TABLE TBL_BOARD_INFO
+   (	"No" Int, 
+	"userName" VARCHAR2(36 BYTE), 
+	"title" VARCHAR2(100 BYTE), 
+	"contents" VARCHAR2(3000 BYTE), 
+	"boardGroup" Int, 
+    "boardLevel" Int, 
+    "boardStep" Int, 
+    "regdate" VARCHAR2(36 BYTE), 
+    "hit" Int, 
+    "type" Int,
+    "num" Int
+   ) 
+
+--시퀀스 생성하기
+CREATE SEQUENCE BOARD_SEQ
+  START WITH 1    -- 시작값 (인덱스의 초기값)
+  INCREMENT BY 1  -- 증가값 (1씩 증가)
+  NOMAXVALUE;      -- 최대값 지정하지 않음
+  
+--인덱스 생성하기
+CREATE INDEX BOARD_SEQ ON TBL_BOARD (No);
+commit;
+
+
+--------------------------------------------------------
+--  DDL for Table TBL_BOARD
+--------------------------------------------------------
+
+  CREATE TABLE "PEPE"."TBL_BOARD" 
+   (	"NO" NUMBER, 
+	"userName" VARCHAR2(36 BYTE), 
+	"title" VARCHAR2(100 BYTE), 
+	"contents" VARCHAR2(3000 BYTE), 
+	"boardGroup" NUMBER, 
+	"boardLevel" NUMBER, 
+	"boardStep" NUMBER, 
+	"regdate" VARCHAR2(36 BYTE), 
+	"hit" NUMBER(*,0), 
+	"type" NUMBER(*,0), 
+	"num" NUMBER(*,0)
+   ) SEGMENT CREATION IMMEDIATE 
+  PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index BOARD_SEQ
+--------------------------------------------------------
+
+  CREATE INDEX "PEPE"."BOARD_SEQ" ON "PEPE"."TBL_BOARD" ("NO") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+
+--데이터 넣기
+--어드민 계정 넣기
+select * from tbl_member; 
+update tbl_member set adminYn = 1 where id='test1';
+commit;
+--버스 데이터 넣기
+INSERT INTO tbl_bus 
+VALUES (IDX_BUS.NEXTVAL, 101,30,'부산','서울','2023-08-08', 0,30);
+INSERT INTO tbl_bus 
+VALUES (IDX_BUS.NEXTVAL, 102,30,'경주','서울','2023-08-08', 0,30);
+INSERT INTO tbl_bus 
+VALUES (IDX_BUS.NEXTVAL, 103,20,'인천','서울','2023-08-08', 0,20);
+INSERT INTO tbl_bus 
+VALUES (IDX_BUS.NEXTVAL, 104,30,'성남','서울','2023-08-08', 0,30);
+INSERT INTO tbl_bus 
+VALUES (IDX_BUS.NEXTVAL, 105,30,'속초','서울','2023-08-08', 0,30);
+INSERT INTO tbl_bus 
+VALUES (IDX_BUS.NEXTVAL, 105,30,'양양','서울','2023-08-08', 0,30);
+INSERT INTO tbl_bus 
+VALUES (IDX_BUS.NEXTVAL, 106,20,'전북','서울','2023-08-08', 0,20);
+
+--게시판 데이터 넣기
