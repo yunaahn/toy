@@ -9,4 +9,5 @@ public interface BusService {
     int insertBus(BusDto busDto);
     List<BusDto> getBusList(String datepicker);
     List<BusDto> getBusListByDate(LocalDate selectedDate);
+    List<BusDto> getRankByDate(LocalDate selectedDate);
 }

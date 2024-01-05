@@ -59,6 +59,13 @@ public class BusController {
         List<BusDto> busList = busService.getBusListByDate(datepicker);
         return ResponseEntity.ok().body(busList);
     }
+
+    @ResponseBody
+    @PostMapping("/reservation/rank")
+    public ResponseEntity<List<BusDto>> getRank(@RequestParam("datepicker") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate datepicker) {
+        List<BusDto> busList = busService.getRankByDate(datepicker);
+        return ResponseEntity.ok().body(busList);
+    }
         
 
     }

@@ -12,6 +12,7 @@ public interface BusDao {
     int insertBus(BusDto busDto);
     List<BusDto> getBusList();
     List<BusDto> getBusListByDate(String selectedDate);
+    List<BusDto> getRankByDate(String selectedDate);
     int updateRemaining(BusDto busDto);
     int updateBooked(BusDto busDto);
 }

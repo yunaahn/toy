@@ -11,6 +11,7 @@
         ,Departure
         ,Arrival
         ,BusDate
+        ,Remaining
     )
     values (
         idx_bus.NEXTVAL
@@ -18,7 +19,8 @@
         ,#{SeatsTotal}
         ,#{Departure}
         ,#{Arrival}
-        ,#{BusDate})
+        ,#{BusDate}
+        ,#{SeatsTotal})
   </insert>
   <select id="getBusList" resultType="busDto">
   
@@ -45,6 +47,18 @@
         ,idx
     FROM tbl_bus 
     where BusDate = #{selectedDate}
+        
+</select>
+
+<select id="getRankByDate" resultType="busDto">
+  
+    select 
+        BusNo
+        ,Arrival
+        ,Booked
+    from TBL_BUS 
+    WHERE BusDate = #{selectedDate}
+    ORDER BY BOOKED DESC
         
 </select>
 

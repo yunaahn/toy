@@ -11,6 +11,7 @@
         ,Departure
         ,Arrival
         ,BusDate
+        ,Remaining
     )
     values (
         idx_bus.NEXTVAL
@@ -18,7 +19,8 @@
         ,#{SeatsTotal}
         ,#{Departure}
         ,#{Arrival}
-        ,#{BusDate})
+        ,#{BusDate}
+        ,#{SeatsTotal})
   </insert>
   <select id="getBusList" resultType="busDto">
   

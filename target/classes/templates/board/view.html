@@ -32,18 +32,18 @@
             <tr>
               <th>작성일시</th>
               <td th:text="${boardDto.regDate}">2023/04/15</td>
-              <th>조회수</th>
+              <th>HIT</th>
               <td th:text="${boardDto.hit}">1000000</td>
             </tr>
             <tr>
               <th>내용</th>
-              <td colspan="30" th:text="${boardDto.contents}">내용이 들어갑니다.</td>
+              <td colspan="3" th:text="${boardDto.contents}">내용이 들어갑니다.</td>
             </tr>
           </tbody>
         </table>
         <div class="mt-5 text-center">
-          <a href="/board/reply" class="btn btn-primary">답변작성</a>
-          <a href="/main/list" class="btn btn-secondary">홈</a>
+          <a href="/board/reply" class="btn btn-primary">REPLY WRITE</a>
+          <a href="/" class="btn btn-secondary">HOME</a>
         </div>
       </div>
     </div>

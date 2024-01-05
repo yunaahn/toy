@@ -62,6 +62,14 @@ public List<BusDto> getBusListByDate(LocalDate selectedDate) {
     return busList;
 }
 
+@Override
+public List<BusDto> getRankByDate(LocalDate selectedDate) {
+    // 데이터베이스에서 버스 목록을 검색
+    String formattedDate = selectedDate.format(DateTimeFormatter.ISO_DATE);
+    List<BusDto> busList = busDao.getRankByDate(formattedDate);
+    return busList;
+}
+
    
     
 }
