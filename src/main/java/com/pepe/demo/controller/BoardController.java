@@ -9,14 +9,19 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.pepe.demo.dto.BoardDto;
 import com.pepe.demo.service.BoardService;
 
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Controller;
 
 @Controller
 public class BoardController {
+  private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
+
     @Autowired
     BoardService boardService;
   
@@ -82,6 +87,32 @@ public class BoardController {
       BoardDto boardDto = boardService.getBoardOne(no);
       model.addAttribute("boardDto", boardDto);
       return "/board/view";
+    }
+    
+    @GetMapping("/board/reply")
+    public String reply(Model model, @RequestParam("no") Integer no) {
+      BoardDto boardDto = boardService.replyBoard(no);
+      logger.info("GET /board/reply endpoint called with parameter 'no': {}", no);
+      model.addAttribute("boardDto", boardDto);
+      return "/board/reply";
+    }
+
+    @PostMapping("/board/reply")
+    public String replyInsert(
+    @Valid BoardDto boardDto,
+    @RequestParam("no") Integer no,
+    BindingResult bindingResult,
+    Model model) {
+      if (bindingResult.hasErrors()) {
+        model.addAttribute("boardDto", boardDto);
+        return "/board/write";
+      }
+      boardDto.setNo(no);
+      int BoardGroup = boardService.getBoardGroup(no);
+      int BoardLevel = boardService.getMaxBoardLevel(BoardGroup);
+      boardDto.setBoardLevel(BoardLevel);
+      int result = boardService.writeBoardReply(boardDto);
+      return "redirect:/board/list";
     }
 
 }

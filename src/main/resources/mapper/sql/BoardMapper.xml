@@ -9,8 +9,8 @@
       #{userName},
       #{title},
       #{contents},
-      '',
-      '',
+      BOARD_SEQ.NEXTVAL,
+      0,
       '',
       <!-- #{boardGroup},
       #{boardLevel},
@@ -21,6 +21,27 @@
       1
     )
   </insert>
+
+  <insert id="writeBoardReply" parameterType="boardDto">
+  
+    insert into TBL_BOARD values (
+      BOARD_SEQ.NEXTVAL,
+      #{userName},
+      #{title},
+      #{contents},
+      #{no},
+      #{boardGroup},
+      #{boardLevel},
+      <!-- #{boardGroup},
+      #{boardLevel},
+      #{boardStep}, -->
+      SYSDATE,
+      0,
+      0,
+      1
+    )
+  </insert>
+
 
     <insert id="writenoticeBoard" parameterType="boardDto">
     insert into TBL_BOARD values (
@@ -42,7 +63,7 @@
   </insert>
   
   <select id="getBoardList" resultType="boardDto">
-  select * from TBL_BOARD where "type"= 0
+  select * from TBL_BOARD where "type"= 0 order by no desc
   </select>
 
     <select id="getNoticeList" resultType="boardDto">
@@ -56,6 +77,32 @@
    <select id="getBoardOne" resultType="boardDto" parameterType="integer">
   select * from TBL_BOARD where no = #{no}
   </select>
+
+   <select id="getBoardrep" resultType="boardDto" parameterType="integer">
+  select 
+  userName,
+  title,
+  no
+   from TBL_BOARD where no = #{no}
+  </select>
+
+   <select id="replyBoard" resultType="boardDto" parameterType="integer">
+  select no from TBL_BOARD where no = #{no}
+  </select>
+
+<select id="getBoardGroup" resultType="integer" parameterType="integer">
+    <![CDATA[
+        SELECT boardGroup FROM (
+            SELECT "boardGroup" FROM TBL_BOARD WHERE no =  #{no} ORDER BY no desc
+        ) WHERE ROWNUM <= 1
+    ]]>
+</select>
+
+
+<select id="getMaxBoardLevel" parameterType="integer" resultType="integer">
+  SELECT  MAX(NVL(boardLevel,0)) FROM TBL_BOARD 
+  WHERE boardGroup = #{boardGroup}
+</select>
 
 
 </mapper>

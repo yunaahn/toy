@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns="http://www.thymeleaf.org" layout:decorate="~{/layout/layout.html}">
+  <head>
+    <title>HOME</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<style>
+    #selected{
+        width: 150px;
+    }
+</style>
+  </head>
+  <body>
+    <div layout:fragment="contents">
+      <div class="container">
+        <!-- 여기서 부터 달라지는 내용 -->
+        <h2>답글 작성</h2>
+        <form action="/board/reply" th:object="${boardDto}" method="post">
+          <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">아이디</label>
+            <div class="mb-3">
+              <input type="text" class="form-control" placeholder="아이디 입력해 주세요." aria-label="username" aria-describedby="button-addon2" id="userName" name="userName" th:value="${boardDto.userName}" />
+            </div>
+            <p th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}" class="error">에러 메세지 출력</p>
+          </div>
+          <div class="mb-3">
+            <label for="exampleFormControlInput5" class="form-label">제목</label>
+            <input type="text" class="form-control" id="exampleFormControlInput5" placeholder="제목을 입력해 주세요." name="title" th:value="${boardDto.title}" />
+            <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="error">에러 메세지 출력</p>
+          </div>
+          <div class="mb-3">
+            <label for="contents" class="form-label">내용</label>
+            <textarea class="form-control contents" id="contents" placeholder="내용을 입력해 주세요." name="contents" th:value="${boardDto.contents}"></textarea>
+            <p th:if="${#fields.hasErrors('contents')}" th:errors="*{contents}" class="error">에러 메세지 출력</p>
+          </div>
+          <div class="text-center">
+            <button class="btn btn-primary">작성하기</button>
+            <button class="btn btn-secondary" type="reset">재작성</button>
+          </div>
+          <input type="hidden" id="no" name="no" th:value="${boardDto.no}" />
+        </form>
+
+       
+      </div>
+    </div>
+  </body>
+</html>

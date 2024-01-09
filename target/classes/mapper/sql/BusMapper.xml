@@ -50,17 +50,5 @@
         
 </select>
 
-<select id="getRankByDate" resultType="busDto">
-  
-    select 
-        BusNo
-        ,Arrival
-        ,Booked
-    from TBL_BUS 
-    WHERE BusDate = #{selectedDate}
-    ORDER BY BOOKED DESC
-        
-</select>
-
 
 </mapper>

@@ -42,7 +42,7 @@
           </tbody>
         </table>
         <div class="mt-5 text-center">
-          <a href="/board/reply" class="btn btn-primary">REPLY WRITE</a>
+          <a th:href="@{/board/reply(no=${boardDto.no})}" class="btn btn-primary">REPLY WRITE</a>
           <a href="/" class="btn btn-secondary">HOME</a>
         </div>
       </div>

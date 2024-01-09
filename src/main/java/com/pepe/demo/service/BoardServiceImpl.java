@@ -27,6 +27,9 @@ public class BoardServiceImpl implements BoardService {
         int result = boardDao.writenoticeBoard(boardDto);
         return result;
     }
+
+ 
+
     @Override
     public int getMaxGroup() {
       int max = boardDao.getMaxGroup();
@@ -52,6 +55,12 @@ public class BoardServiceImpl implements BoardService {
       return boardDto;
     }
 
+    @Override
+    public BoardDto getBoardrep(int no) {
+      BoardDto boardDto = boardDao.getBoardrep(no);
+      return boardDto;
+    }
+
     
   @Override
   public int updateHit(int no) {
@@ -59,6 +68,30 @@ public class BoardServiceImpl implements BoardService {
     return result;
   }
 
+  @Override
+  public BoardDto replyBoard(int no) {
+    BoardDto boardDto = boardDao.replyBoard(no);
+      return boardDto;
+  }
+
+  @Override
+  public int getBoardGroup(int no) {
+    int boardDto = boardDao.getBoardGroup(no);
+      return boardDto;
+  }
+
+  @Override
+  public int getMaxBoardLevel(int no) {
+    int boardDto = boardDao.getMaxBoardLevel(no);
+      return boardDto;
+  }
+
+  @Override
+    public int writeBoardReply(BoardDto boardDto) {
+       // boardDto.setBoardGroup(getMaxGroup() + 1); //글쓰면 증가
+        int result = boardDao.writeBoardReply(boardDto);
+        return result;
+    }
 
   
     
