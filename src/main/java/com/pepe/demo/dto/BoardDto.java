@@ -7,7 +7,7 @@ import lombok.Data;
 
 @Data
 public class BoardDto {
-    
+  private int ROW; //고유번호
   private int no; //고유번호
 
   private String userName;

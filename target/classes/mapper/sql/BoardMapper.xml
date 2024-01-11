@@ -25,13 +25,13 @@
   <insert id="writeBoardReply" parameterType="boardDto">
   
     insert into TBL_BOARD values (
-      BOARD_SEQ.NEXTVAL,
+      #{no},
       #{userName},
       #{title},
       #{contents},
       #{no},
-      #{boardGroup},
       #{boardLevel},
+      0,
       <!-- #{boardGroup},
       #{boardLevel},
       #{boardStep}, -->
@@ -63,7 +63,24 @@
   </insert>
   
   <select id="getBoardList" resultType="boardDto">
-  select * from TBL_BOARD where "type"= 0 order by no desc
+        SELECT 
+     ROWNUM as "ROW",
+    "NO",
+    "userName",
+    "title",
+    "contents",
+    "boardGroup",
+    "boardLevel",
+    "boardStep",
+    "regdate",
+    "hit",
+    "type",
+    "num"
+FROM 
+    TBL_BOARD 
+WHERE 
+    "type" = 0
+ORDER BY "boardGroup" DESC, "boardLevel" ASC
   </select>
 
     <select id="getNoticeList" resultType="boardDto">
@@ -92,7 +109,7 @@
 
 <select id="getBoardGroup" resultType="integer" parameterType="integer">
     <![CDATA[
-        SELECT boardGroup FROM (
+        SELECT "boardGroup" FROM (
             SELECT "boardGroup" FROM TBL_BOARD WHERE no =  #{no} ORDER BY no desc
         ) WHERE ROWNUM <= 1
     ]]>
@@ -100,8 +117,9 @@
 
 
 <select id="getMaxBoardLevel" parameterType="integer" resultType="integer">
-  SELECT  MAX(NVL(boardLevel,0)) FROM TBL_BOARD 
-  WHERE boardGroup = #{boardGroup}
+  SELECT  MAX(NVL("boardLevel",0)) as  "boardLevel" FROM TBL_BOARD 
+  WHERE "boardGroup" = #{boardGroup}
+  
 </select>
 
 

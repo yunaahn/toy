@@ -32,6 +32,23 @@
           </thead>
           <tbody>
             <tr th:each="item : ${boardList}">
+                <th th:hidden="${item.no}">1</th>
+                <th th:text="${item.ROW}">1</th>
+                <td>
+                    <!-- 들여쓰기를 위한 로직 추가 -->
+                    <span th:utext="${'&nbsp;&nbsp;&nbsp;'.repeat(item.boardLevel)}"></span>
+                    <!-- 답글 표시 -->
+                    <span th:if="${item.boardLevel > 0}">ㄴRe: </span>
+                    <a href="" th:text="${item.title}" th:href="@{/board/view(no=${item.no})}"></a>
+                </td>
+                <td th:text="${item.userName}">Otto</td>
+                <td th:text="${item.regDate}">@mdo</td>
+                <td th:text="${item.hit}">@mdo</td>
+            </tr>
+        </tbody>
+        
+          <!-- <tbody>
+            <tr th:each="item : ${boardList}">
               <th th:text="${item.no}">1</th>
               <td>
                 <a href="" th:text="${item.title}" th:href="@{/board/view(no=${item.no})}"></a>
@@ -40,7 +57,7 @@
               <td th:text="${item.regDate}">@mdo</td>
               <td th:text="${item.hit}">@mdo</td>
             </tr>
-          </tbody>
+          </tbody> -->
         </table>
        
       </div>
