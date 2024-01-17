@@ -63,7 +63,7 @@
   </insert>
   
   <select id="getBoardList" resultType="boardDto">
-        SELECT 
+  SELECT 
      ROWNUM as "ROW",
     "NO",
     "userName",
@@ -83,28 +83,56 @@ WHERE
 ORDER BY "boardGroup" DESC, "boardLevel" ASC
   </select>
 
+<!-- 페이징을 적용한 쿼리 -->
+<select id="getListWithPaging" resultType="boardDto" parameterType="map">
+  SELECT * FROM (
+    SELECT
+      ROWNUM as "ROW",
+      "NO",
+      "userName",
+      "title",
+      "contents",
+      "boardGroup",
+      "boardLevel",
+      "boardStep",
+      "regdate",
+      "hit",
+      "type",
+      "num"
+    FROM 
+      TBL_BOARD 
+    WHERE 
+      "type" = 0
+    ORDER BY "boardGroup" DESC, "boardLevel" ASC
+  ) WHERE ROWNUM &lt;= #{endRow} AND ROWNUM &gt;= #{startRow}
+</select>
+
+ <select id="getTotalBoardCount" resultType="integer">
+  SELECT COUNT(*) FROM TBL_BOARD
+  </select>
+
     <select id="getNoticeList" resultType="boardDto">
-  select * from TBL_BOARD where "type"= 1
+  SELECT * FROM TBL_BOARD WHERE "type"= 1
   </select>
 
   <update id="updateHit" parameterType="integer">
-  update TBL_BOARD set "hit" = "hit" +1 where no = #{no}
+  update TBL_BOARD set "hit" = "hit" +1 WHERE no = #{no}
   </update>
 
    <select id="getBoardOne" resultType="boardDto" parameterType="integer">
-  select * from TBL_BOARD where no = #{no}
+  SELECT * FROM TBL_BOARD WHERE no = #{no}
   </select>
 
    <select id="getBoardrep" resultType="boardDto" parameterType="integer">
-  select 
+  SELECT 
   userName,
   title,
   no
-   from TBL_BOARD where no = #{no}
+   FROM TBL_BOARD WHERE no = #{no}
   </select>
 
    <select id="replyBoard" resultType="boardDto" parameterType="integer">
-  select no from TBL_BOARD where no = #{no}
+  SELECT no FROM TBL_BOARD WHERE no = #{no}
   </select>
 
 <select id="getBoardGroup" resultType="integer" parameterType="integer">

@@ -20,4 +20,8 @@ public interface BoardDao {
     int getBoardGroup(int no);
     int getMaxBoardLevel(int no);
     int updateHit(int no);
+    int getTotalBoardCount();
+    List<BoardDto> getListWithPaging(int startRow, int endRow);
+    List<BoardDto> getList(int currentPage, int pageSize);
+    
 }

@@ -48,6 +48,26 @@ public class BoardServiceImpl implements BoardService {
         return noticeList;
     }
 
+
+
+    @Override
+    public List<BoardDto> getList(int currentPage, int pageSize) {
+        // startRow와 endRow를 계산하여 해당 페이지의 데이터를 가져온다.
+        int startRow = (currentPage - 1) * pageSize + 1;
+        int endRow = startRow + pageSize - 1;
+
+        List<BoardDto> boardList = boardDao.getListWithPaging(startRow, endRow);
+        return boardList;
+    }
+
+   @Override
+    public List<BoardDto> getListWithPaging(int startRow, int endRow) {
+      
+      
+      List<BoardDto> boardDto = boardDao.getListWithPaging(startRow, endRow);
+      return boardDto;
+    }
+
     @Override
     public BoardDto getBoardOne(int no) {
       updateHit(no);
@@ -93,6 +113,10 @@ public class BoardServiceImpl implements BoardService {
         return result;
     }
 
+  @Override
+    public int getTotalBoardCount() {
+        return boardDao.getTotalBoardCount();
+    }
   
     
     

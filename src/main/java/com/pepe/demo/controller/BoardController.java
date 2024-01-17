@@ -69,9 +69,25 @@ public class BoardController {
   
 
     @GetMapping("/board/list")
-    public String list(Model model) {
-        List<BoardDto> boardList = boardService.getBoardList();
-        model.addAttribute("boardList", boardList);
+    public String list(@RequestParam(name = "page", defaultValue = "1") Integer currentPage,
+     Model model) {
+
+       int pageSize = 10;
+       // 전체 게시물 수 조회
+       int totalItems = boardService.getTotalBoardCount();
+
+       // 페이징에 필요한 정보 계산
+       int totalPages = (int) Math.ceil((double) totalItems / pageSize);
+
+       // 현재 페이지 번호를 모델에 추가
+       model.addAttribute("currentPage", currentPage);
+       // 전체 페이지 수를 모델에 추가
+       model.addAttribute("totalPages", totalPages);
+       // 다른 필요한 데이터를 모델에 추가
+       model.addAttribute("boardList", boardService.getList(currentPage, pageSize));
+
+       // totalItems를 모델에 추가
+       model.addAttribute("totalItems", totalItems);
         return "/board/list";
     }
 
