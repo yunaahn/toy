@@ -103,6 +103,12 @@ $(document).ready(function() {
 });
 </script>
 
+<script th:if="${memberDto != null and memberDto.passwordNotMatch}">
+    $(document).ready(function() {
+        alert('Password is incorrect');
+    });
+</script>
+
 </body>
 
 </html>

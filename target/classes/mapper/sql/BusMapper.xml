@@ -50,5 +50,20 @@
         
 </select>
 
+<select id="getRankByDate" resultType="busDto">
+  SELECT * FROM (
+    SELECT 
+      BusNo,
+      Arrival,
+      Booked
+    FROM tbl_bus 
+    WHERE BusDate = #{selectedDate} AND Booked IS NOT NULL
+    ORDER BY SeatsTotal - Remaining ASC
+  ) 
+  WHERE ROWNUM &lt;= 5
+</select>
+
+
+
 
 </mapper>

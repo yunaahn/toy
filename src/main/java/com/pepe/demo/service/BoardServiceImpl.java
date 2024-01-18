@@ -13,6 +13,24 @@ public class BoardServiceImpl implements BoardService {
 
     @Autowired
     BoardDao boardDao;
+
+    public class Result {
+      private final boolean success;
+      private final String message;
+  
+      public Result(boolean success, String message) {
+          this.success = success;
+          this.message = message;
+      }
+  
+      public boolean isSuccess() {
+          return success;
+      }
+  
+      public String getMessage() {
+          return message;
+      }
+  }
     
     @Override
     public int writeBoard(BoardDto boardDto) {
@@ -25,6 +43,7 @@ public class BoardServiceImpl implements BoardService {
     public int writenoticeBoard(BoardDto boardDto) {
         //boardDto.setBoardGroup(getMaxGroup() + 1); //글쓰면 증가
         int result = boardDao.writenoticeBoard(boardDto);
+    
         return result;
     }
 

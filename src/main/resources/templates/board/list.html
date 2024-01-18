@@ -1,108 +1,106 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns="http://www.thymeleaf.org" layout:decorate="~{/layout/layout.html}">
-  <head>
-    <title>HOME</title>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-  
-  </head>
-  <body>
-    <div layout:fragment="contents">
-      <div class="container">
-        <!-- 여기서 부터 달라지는 내용 -->
-        <h2>BOARD LIST</h2>
-        <table class="table table-striped">
-          <colgroup>
-            <col />
-            <col />
-            <col />
-            <col />
-            <col />
-          </colgroup>
-          <thead>
-            <tr>
-              <th scope="col">No</th>
-              <th scope="col">TITLE</th>
-              <th scope="col">WRITER</th>
-              <th scope="col">DATE</th>
-              <th scope="col">HIT</th>
-            </tr>
-          </thead>
-          <!-- <tbody>
-            <tr th:each="item, index : ${boardList}">
-            
-              <th th:text="${boardList.size() - index.count + 1}">1</th>
-                <th th:hidden="${item.no}">1</th>
-                <td>
-               
-                    <span th:utext="${'&nbsp;&nbsp;&nbsp;'.repeat(item.boardLevel)}"></span>
-                  
-                    <span th:if="${item.boardLevel > 0}">ㄴRe: </span>
-                    <a href="" th:text="${item.title}" th:href="@{/board/view(no=${item.no})}"></a>
-                </td>
-                <td th:text="${item.userName}">Otto</td>
-                <td th:text="${item.regDate}">@mdo</td>
-                <td th:text="${item.hit}">@mdo</td>
-            </tr>
-        </tbody> -->
-        
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  xmlns="http://www.thymeleaf.org" layout:decorate="~{/layout/layout.html}">
 
+<head>
+  <title>HOME</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
-      <!-- ... 이전 부분 생략 ... -->
+  <style>
+    .pagination {
+      justify-content: center;
+      align-items: center;
+    }
 
-      <!-- 페이징을 위한 변수 정의 -->
-      <th:block th:with="currentPage=${currentPage ?: 1}, pageSize=10, totalItems=${totalItems ?: 0}">
-          
-      <!-- 페이징 처리된 행만 표시 -->
-      <tbody>
-          <tr th:each="item, index : ${boardList}" th:if="${index.count > (currentPage - 1) * pageSize and index.count <= currentPage * pageSize}">
+    .pagination a {
+      text-decoration: none;
+      color: black;
+      padding: 8px 16px;
+    }
+
+    .pagination .active {
+      background-color: #4CAF50;
+      border: 1px solid #4CAF50;
+    }
+  </style>
+</head>
+
+<body>
+  <div layout:fragment="contents">
+    <div class="container">
+      <!-- 여기서 부터 달라지는 내용 -->
+      <h2>Q&A 게시판</h2>
+      <table class="table table-striped">
+        <colgroup>
+          <col />
+          <col />
+          <col />
+          <col />
+          <col />
+        </colgroup>
+        <thead>
+          <tr>
+            <th scope="col">No</th>
+            <th scope="col">TITLE</th>
+            <th scope="col">WRITER</th>
+            <th scope="col">DATE</th>
+            <th scope="col">HIT</th>
+          </tr>
+        </thead>
+        <!-- 페이징을 위한 변수 정의 -->
+        <th:block th:with="currentPage=${currentPage ?: 1}, pageSize=10, totalItems=${totalItems ?: 0}">
+
+          <!-- 페이징 처리된 행만 표시 -->
+          <tbody>
+            <tr th:each="item, index : ${boardList}"
+              th:if="${index.count > (currentPage - 1) * pageSize and index.count <= currentPage * pageSize}">
               <!-- 역순으로 번호 생성 -->
               <th th:text="${totalItems - index.count + 1}">1</th>
               <th th:hidden="${item.no}">1</th>
               <td>
-                  <!-- 들여쓰기를 위한 로직 추가 -->
-                  <span th:utext="${'&nbsp;&nbsp;&nbsp;'.repeat(item.boardLevel)}"></span>
-                  <!-- 답글 표시 -->
-                  <span th:if="${item.boardLevel > 0}">ㄴRe: </span>
-                  <a href="" th:text="${item.title}" th:href="@{/board/view(no=${item.no})}"></a>
+                <!-- 들여쓰기를 위한 로직 추가 -->
+                <span th:utext="${'&nbsp;&nbsp;&nbsp;'.repeat(item.boardLevel)}"></span>
+                <!-- 답글 표시 -->
+                <span th:if="${item.boardLevel > 0}">ㄴRe: </span>
+                <a href="" th:text="${item.title}" th:href="@{/board/view(no=${item.no})}"></a>
               </td>
               <td th:text="${item.userName}">Otto</td>
               <td th:text="${item.regDate}">@mdo</td>
               <td th:text="${item.hit}">@mdo</td>
-          </tr>
-      </tbody>
+            </tr>
+          </tbody>
 
+
+        </th:block>
+
+
+
+      </table>
       <!-- 페이징 버튼 표시 -->
-      <tr>
-          <td colspan="5" class="pagination">
-              <span th:if="${currentPage > 1}">
-                  <a th:href="@{'/board/list?page=' + (currentPage - 1)}">&lt; 이전</a>
-              </span>
-              
-              <span th:each="page : ${#numbers.sequence(1, totalPages)}">
-                  <span th:if="${currentPage == page}">
-                      <strong th:text="${page}"></strong>
-                  </span>
-                  <span th:unless="${currentPage == page}">
-                      <a th:href="@{'/board/list?page=' + page}" th:text="${page}"></a>
-                  </span>
-              </span>
-              
-              <span th:if="${currentPage < totalPages}">
-                  <a th:href="@{'/board/list?page=' + (currentPage + 1)}">다음 &gt;</a>
-              </span>
-          </td>
-      </tr>
-      </th:block>
+      <div class="pagination">
+        <!-- <span th:if="${currentPage > 1}">
+          <a th:href="@{'/board/list?page=' + (currentPage - 1)}">&lt; 이전</a>
+        </span> -->
 
-<!-- ... 이후 부분 생략 ... -->
+        <span th:each="page : ${#numbers.sequence(1, totalPages)}">
+          <span th:if="${currentPage == page}">
+            <strong th:text="${page}"></strong>
+          </span>
+          <span th:unless="${currentPage == page}">
+            <a th:href="@{'/board/list?page=' + page}" th:text="${page}"></a>
+        </span>        
+        </span>
 
-
-        </table>
-       
+        <span th:if="${currentPage < totalPages}">
+          <a th:href="@{'/board/list?page=' + (currentPage + 1)}">다음 &gt;</a>
+        </span>
       </div>
+
     </div>
-  </body>
+  </div>
+</body>
+
 </html>

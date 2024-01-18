@@ -25,4 +25,6 @@ public class MemberDto {
     private String Password;
     
     private int AdminYn;
+
+    private boolean passwordNotMatch;
 }

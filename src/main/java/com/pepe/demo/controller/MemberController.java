@@ -37,30 +37,32 @@ public class MemberController {
     @PostMapping("/member/signin")
     @ResponseBody
     public String signinProcess(@RequestBody MemberDto memberDto, HttpSession session
-    , HttpServletResponse response) {
+        , HttpServletResponse response) {
         MemberDto loggedMember = memberService.loginMember(memberDto);
         if (loggedMember != null) {
+            // 성공적으로 로그인했을 때
             session.setAttribute("loggedMember", loggedMember);
             Cookie cookie = new Cookie("loggedUserId", loggedMember.getId());
-
+    
             int adminYn = loggedMember.getAdminYn();
             Cookie getAdminYn = new Cookie("getAdminYn", String.valueOf(adminYn));
-
+    
             cookie.setMaxAge(60*60*24);
             cookie.setPath("/");
-
+    
             getAdminYn.setMaxAge(60*60*24);
             getAdminYn.setPath("/");
-
+    
             response.addCookie(cookie);
             response.addCookie(getAdminYn);
-
-
+    
             log.info(loggedMember.toString());
             return "loggedMember";
+        } else {
+            // 로그인 실패일 때
+            memberDto.setPasswordNotMatch(true);
+            return "failure";
         }
-    
-        return "failure";
     }
 
   

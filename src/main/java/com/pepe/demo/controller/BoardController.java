@@ -61,7 +61,7 @@ public class BoardController {
         model.addAttribute("boardDto", boardDto);
         return "/board/writenotice";
       }
-      int result = boardService.writenoticeBoard(boardDto);
+      boardService.writenoticeBoard(boardDto);
       return "redirect:/board/writenotice";
     }
     
@@ -81,13 +81,13 @@ public class BoardController {
 
        // 현재 페이지 번호를 모델에 추가
        model.addAttribute("currentPage", currentPage);
+         model.addAttribute("page", currentPage);
        // 전체 페이지 수를 모델에 추가
        model.addAttribute("totalPages", totalPages);
-       // 다른 필요한 데이터를 모델에 추가
        model.addAttribute("boardList", boardService.getList(currentPage, pageSize));
-
-       // totalItems를 모델에 추가
        model.addAttribute("totalItems", totalItems);
+
+       System.out.println("Current Page: " + currentPage);
         return "/board/list";
     }
 
